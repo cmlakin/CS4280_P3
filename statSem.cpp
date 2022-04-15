@@ -105,7 +105,7 @@ void insertIdent(string ident) {
     int flag = 0;
 
     while (flag == 0) {
-      for (list<node_t>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+      for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
 
         if (ident == (*iter)){
           cout << "Error. Identifier already defined. Exiting Program.\n";
@@ -125,7 +125,7 @@ void verifyIdent(string ident) {
   int flag = 0;
 
   while (flag == 0) {
-    for (list<node_t>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+    for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
 
       if (ident == (*iter)){
         flag = 1;
@@ -139,7 +139,7 @@ void verifyIdent(string ident) {
 }
 
 void print() {
-  for (list<node_t>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+  for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
     cout << (*iter) << endl;
   }
 }
