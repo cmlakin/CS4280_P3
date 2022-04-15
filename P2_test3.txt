@@ -1,9 +1,0 @@
-Name prog3
-Spot prog3
-Place
-.
-Here 2 There
-.
-Show id1
-Home
-Show prog3

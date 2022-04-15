@@ -48,7 +48,7 @@ Token getNextToken(istream& in) {
 //individual functions written out.
 node_t* S(istream& in, Token& tk){
   node_t* p= new node_t('S');
-  // cout << "in S token.chars = " << tk.chars << endl;
+  //cout << "in S token.chars = " << tk.chars << endl;
   p->level = levelNum;
   if (tk.chars == "Name") {
     node_t t(tk);

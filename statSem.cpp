@@ -21,23 +21,23 @@ void statSem(node_t* p) {
     // cout << p->label << endl;
 
     string entry;
-    cout << "label " << p->label << endl;
+    //cout << "label " << p->label << endl;
     for (list<node_t>::iterator iter = std::begin(p->children); iter!=std::end(p->children); ++iter){
 
-      cout << "iter " << (*iter).token.chars << endl;
+      //cout << "iter " << (*iter).token.chars << endl;
 
       entry = (*iter).token.chars;
 
       if (entry == "Name") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         insertIdent(currentIdent);
       }
       else if (entry == "Spot") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         if ((*iter).token.ID == 1002) {
           insertIdent(currentIdent);
         }
@@ -48,7 +48,7 @@ void statSem(node_t* p) {
       else if (entry == "Show") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         if ((*iter).token.ID == 1002) {
 
           verifyIdent(currentIdent);
@@ -60,31 +60,31 @@ void statSem(node_t* p) {
       else if (entry == "If") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         verifyIdent(currentIdent);
       }
       else if (entry == "Assign") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         verifyIdent(currentIdent);
       }
       else if (entry == "Move") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         verifyIdent(currentIdent);
       }
       else if (entry == "Flip") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         verifyIdent(currentIdent);
       }
       else if (entry == "/") {
         ++iter;
         currentIdent = (*iter).token.chars;
-        cout << "current ident = " << currentIdent << endl;
+        //cout << "current ident = " << currentIdent << endl;
         verifyIdent(currentIdent);
       }
       else {
@@ -97,27 +97,36 @@ void statSem(node_t* p) {
 
 void insertIdent(string ident) {
 
-  if (symTab.empty()) {
+  if (symTab.size() == 0) {
+    cout << "in if symTab size = " << symTab.size() << endl;
     symTab.push_back(ident);
     prevIdent = ident;
   }
   else {
     int flag = 0;
-
-    while (flag == 0) {
+    cout << "in else symTab size = " << symTab.size() << endl;
+    print();
+    //while (flag == 0) {
       for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+        cout << "in for sT iter " << (*iter) << endl;
 
         if (ident == (*iter)){
+          cout << "in if:\n";
+          print();
+          cout << "ident = " << ident << " iter = " << *iter << endl;
           cout << "Error. Identifier already defined. Exiting Program.\n";
           exit(-1);
         }
         else {
+          cout << "in if:\n";
+          print();
+          cout << "ident = " << ident << " iter = " << *iter << endl;
           symTab.push_back(ident);
           prevIdent = ident;
           flag = 1;
         }
       }
-    }
+    //}
   }
 }
 
@@ -139,7 +148,9 @@ void verifyIdent(string ident) {
 }
 
 void print() {
+  cout << "\nSymbol Table:\n";
   for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
     cout << (*iter) << endl;
   }
+  cout << endl;
 }
