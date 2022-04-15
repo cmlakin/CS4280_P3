@@ -1,101 +1,145 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
+#include <iterator>
+#include <list>
 #include "node.h"
 #include "statSem.h"
 
 
 using namespace std;
 
-list symbolTable;
-string prevIdentifier;
-Token prevTk;
+list<string> symTab;  // symbol table
+string prevIdent;
+string currentIdent;
 
 void statSem(node_t* p) {
   if (p == nullptr) {
     return;
-  } else {
+  }
+  else {
+    // cout << p->label << endl;
 
-      // cout << p->label << endl;
+    string entry;
+    cout << "label " << p->label << endl;
+    for (list<node_t>::iterator iter = std::begin(p->children); iter!=std::end(p->children); ++iter){
 
-      int i, j;
-      string entry;
-      string temp; // to hold identifier value while checking
-      // boolean found; //flag for if identifier found in symbolTable
+      cout << "iter " << (*iter).token.chars << endl;
 
-      for (i = 0; i < p->children.size(); i++){
+      entry = (*iter).token.chars;
 
-        entry = p->children[i];
+      if (entry == "Name") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        insertIdent(currentIdent);
+      }
+      else if (entry == "Spot") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        if ((*iter).token.ID == 1002) {
+          insertIdent(currentIdent);
+        }
+        else {
+          verifyIdent(currentIdent);
+        }
+      }
+      else if (entry == "Show") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        if ((*iter).token.ID == 1002) {
 
-        // switch statement for all entries that come before identifier
-        switch(entry){
-
-
-          // when name
-          case "Name":
-                        // check for i++ to see identifier value
-                        i++;
-                        temp = p->children[i];
-
-                        // check if value already in table
-                        for (j = 0; j < list.size(); j++){
-                          // if yes - ERROR
-                          if (temp == symbolTable[j]) {
-                            cout << "Error. Identifier previously defined.\n";
-                            cout << "Exiting program.\n";
-                            exit(-1);
-                          }
-                          // else check to see if greater then previous Identifier
-                          else {
-                            // if yes - add to table and update prev identifier
-                            if (temp > prevIdentifier){
-                              symbolTable.push_back(temp);
-                            }
-                            // else ERROR
-                            else {
-                              cout << "Error. Identifiers not introduced in correct order.\n";
-                              cout << "Exiting program.\n";
-                              exit(-1);
-                            }
-                          }
-                        }
-
-
-          // If spot can now also define an identifier
-          case "Spot":
-
-
-        // for all other possible entries
-          case "Show":
-          case "If":
-          case "Assign":
-          case "Move":
-          case "Flip":
-          case "/":       // check for i++ to see identifier value
-                          i++;
-                          temp = p->children[i];
-                          // check to see if identifier in symbol table
-                          for (j = 0; j < list.size(); j++){
-                            // if yes - continue
-                            if (temp == symbolTable[j]) {
-                              cout << "Error. Identifier previously defined.\n";
-                              cout << "Exiting program.\n";
-                              exit(-1);
-                            }
-                            // else ERROR
-                            else {
-                              cout << "Error. Identifiers not introduced in correct order.\n";
-                              cout << "Exiting program.\n";
-                              exit(-1);
-                            }
-                          }
-
-                            // if no - ERROR
-                            //else continue - treePrint(&s);
-
-          }
-
+          verifyIdent(currentIdent);
+        }
+        else {
+          ;
+        }
+      }
+      else if (entry == "If") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        verifyIdent(currentIdent);
+      }
+      else if (entry == "Assign") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        verifyIdent(currentIdent);
+      }
+      else if (entry == "Move") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        verifyIdent(currentIdent);
+      }
+      else if (entry == "Flip") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        verifyIdent(currentIdent);
+      }
+      else if (entry == "/") {
+        ++iter;
+        currentIdent = (*iter).token.chars;
+        cout << "current ident = " << currentIdent << endl;
+        verifyIdent(currentIdent);
+      }
+      else {
+        cout << "Error. Exiting Program.\n";
       }
     }
+  }
+}
 
+
+void insertIdent(string ident) {
+
+  if (symTab.empty()) {
+    symTab.push_back(ident);
+    prevIdent = ident;
+  }
+  else {
+    int flag = 0;
+
+    while (flag == 0) {
+      for (list<node_t>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+
+        if (ident == (*iter)){
+          cout << "Error. Identifier already defined. Exiting Program.\n";
+          exit(-1);
+        }
+        else {
+          symTab.push_back(ident);
+          prevIdent = ident;
+          flag = 1;
+        }
+      }
+    }
+  }
+}
+
+void verifyIdent(string ident) {
+  int flag = 0;
+
+  while (flag == 0) {
+    for (list<node_t>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+
+      if (ident == (*iter)){
+        flag = 1;
+      }
+      else {
+        cout << "Error. Identifer not defined prior to usage. Exiting Program\n";
+        exit(-1);
+      }
+    }
+  }
+}
+
+void print() {
+  for (list<node_t>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
+    cout << (*iter) << endl;
+  }
 }
