@@ -91,7 +91,7 @@ void statSem(node_t* p) {
         statSem(&(*iter));
       }
 
-      // statSem(&(*iter));
+      statSem(&(*iter));
     }
   }
 }
