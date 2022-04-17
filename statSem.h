@@ -8,6 +8,6 @@ using std::ofstream;
 void statSem(node_t*);
 void insertIdent(string);
 void verifyIdent(string);
-void print();
+void printSymTab();
 
 #endif

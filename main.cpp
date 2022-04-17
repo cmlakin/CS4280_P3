@@ -41,6 +41,8 @@ int main(int argc, char * argv[]) {
 
   // here is where I will call semantics file
   statSem(getRoot());
+  cout << "\nIn Main:\n";
+  printSymTab();
 
   // treePrint(getRoot());
   return 0;

@@ -85,38 +85,46 @@ void statSem(node_t* p) {
         ++iter;
         currentIdent = (*iter).token.chars;
         cout << "current ident = " << currentIdent << endl;
-        verifyIdent(currentIdent);
+        if ((*iter).token.ID == 1002) {
+
+          verifyIdent(currentIdent);
+        }
+        else {
+          ;
+        }
       }
       else {
         statSem(&(*iter));
       }
 
-      statSem(&(*iter));
+      // statSem(&(*iter));
     }
   }
 }
 
 
 void insertIdent(string ident) {
-
+  printSymTab();
   if (symTab.size() == 0) {
     cout << "in if symTab size = " << symTab.size() << endl;
+    cout << "inserting " << ident << " into symTab\n";
     symTab.push_back(ident);
     prevIdent = ident;
+    printSymTab();
   }
   else {
     //int flag = 0;
     cout << "in else symTab size = " << symTab.size() << endl;
-    print();
+    // printSymTab();
     //while (flag == 0) {
       for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
         cout << "in for sT iter " << (*iter) << endl;
 
         if (ident == (*iter)){
           cout << "in if:\n";
-          print();
+          // printSymTab();
           cout << "ident = " << ident << " iter = " << *iter << endl;
-          cout << "Error. Identifier already defined. Exiting Program.\n";
+          cout << "Error. Identifier, " << ident << " already defined. Exiting Program.\n";
           exit(-1);
         }
         else {
@@ -124,11 +132,11 @@ void insertIdent(string ident) {
           //flag = 1;
         }
       }
-      cout << "in if:\n";
-      print();
 
+      cout << "inserting " << ident << " into symTab\n";
       symTab.push_back(ident);
       prevIdent = ident;
+      printSymTab();
     //}
   }
 }
@@ -149,15 +157,15 @@ void verifyIdent(string ident) {
         // exit(-1);
       }
     }
-  cout << "flag  = " << flag << endl;
+  // cout << "flag  = " << flag << endl;
   if (flag == 0) {
     cout << "in verify ident = " << ident << endl;
-    cout << "Error. Identifer not defined prior to usage. Exiting Program\n";
+    cout << "Error. Identifer, " << ident << " not defined prior to usage. Exiting Program\n";
     exit(-1);
   }
 }
 
-void print() {
+void printSymTab() {
   cout << "\nSymbol Table:\n";
   for (list<string>::iterator iter = std::begin(symTab); iter!=std::end(symTab); ++iter){
     cout << (*iter) << endl;
