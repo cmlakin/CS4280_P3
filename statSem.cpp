@@ -121,7 +121,8 @@ void insertIdent(string ident) {
       if (ident == (*iter)){
         // cout << "in if:\n";
         // cout << "ident = " << ident << " iter = " << *iter << endl;
-        cout << "\nError. Identifier, " << ident << " already defined. Exiting Program.\n\n";
+        cout << "\nError. Identifier, " << ident << " already defined.\n";
+        "Exiting Program.\n\n";
         exit(-1);
       }
       else {
@@ -154,7 +155,8 @@ void verifyIdent(string ident) {
   // cout << "flag  = " << flag << endl;
   if (flag == 0) {
     // cout << "in verify ident = " << ident << endl;
-    cout << "\nError. Identifer, " << ident << " not defined prior to usage. Exiting Program.\n\n";
+    cout << "\nError. Identifer, " << ident << " not defined prior to usage.\n";
+    "Exiting Program.\n\n";
     exit(-1);
   }
 }
